@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>硬件安装手册 · 受控安装台</title>
+<link rel="stylesheet" href="/styles.css"/>
+</head>
+<body>
+<header class="topbar">
+  <div class="brand">🔩 硬件安装手册 <span class="tag">受控版本 / DAG / 凭证绑定</span></div>
+  <nav>
+    <button data-view="installer" class="navbtn active">安装台</button>
+    <button data-view="admin" class="navbtn">管理端（型号条件·图纸）</button>
+  </nav>
+  <div class="rolebox">
+    当前角色：
+    <select id="role">
+      <option value="installer">安装人员</option>
+      <option value="admin">管理员</option>
+    </select>
+    <button id="printerToggle" class="mini" title="模拟打印机离线">打印机：在线</button>
+  </div>
+</header>
+
+<main id="app">
+  <!-- ============ 安装台 ============ -->
+  <section id="view-installer" class="view">
+    <div class="cols">
+      <aside class="sidebar">
+        <h2>安装实例</h2>
+        <form id="newInstance" class="card">
+          <label>实例名称 <input name="label" required placeholder="如：3号产线 AX-210"/></label>
+          <label>型号（铭牌核对，不得猜选）
+            <select name="model_code" id="newModel"></select>
+          </label>
+          <label>硬件修订 <select name="hw_rev" id="newRev"></select></label>
+          <label>钉住的手册版本（创建后锁定，不被新版自动覆盖）
+            <select name="version_id" id="newVer"></select>
+          </label>
+          <label>版本策略
+            <select name="migration_policy">
+              <option value="lock" selected>始终锁定旧手册</option>
+              <option value="controlled">允许受控迁移（逐项差异确认）</option>
+            </select>
+          </label>
+          <button class="primary">创建并钉住手册版本</button>
+        </form>
+        <ul id="instanceList" class="instance-list"></ul>
+      </aside>
+
+      <section class="mainpanel" id="instancePanel">
+        <div class="placeholder">从左侧创建或选择一个安装实例。<br/>
+          未知条件会停在“待确认”；系统不提供任何编造的接线/扭矩参数。</div>
+      </section>
+    </div>
+  </section>
+
+  <!-- ============ 管理端 ============ -->
+  <section id="view-admin" class="view" hidden>
+    <div class="admin-grid">
+      <div class="card">
+        <h2>型号条件（后端管理）</h2>
+        <div id="condList"></div>
+        <form id="newCond" class="inline-form">
+          <input name="key" placeholder="条件 key（英文）" required/>
+          <input name="label" placeholder="中文标签" required/>
+          <select name="kind"><option value="choice">choice</option><option value="text">text</option><option value="boolean">boolean</option></select>
+          <input name="options" placeholder='choice 选项 JSON: [{"value":"x","label":"X"}]'/>
+          <button class="primary">新增条件</button>
+        </form>
+      </div>
+      <div class="card">
+        <h2>对象库存图（图纸版本）</h2>
+        <p class="hint">发布新版会自动把旧版置为 superseded，并对已按旧图执行的实例生成<b>复核项</b>（进度不平移）。撤回(withdrawn)将阻断新引用。</p>
+        <div id="drawingList"></div>
+        <form id="newDrawingVersion" class="inline-form">
+          <select name="code" id="dvCode"></select>
+          <input name="change_note" placeholder="变更说明"/>
+          <input type="file" name="file" accept="image/svg+xml,image/png,image/jpeg" required/>
+          <button class="primary">上传并发布新版本</button>
+        </form>
+        <div class="row">
+          <select id="wdCode"></select>
+          <button id="withdrawBtn" class="danger">撤回该图纸当前版本</button>
+        </div>
+      </div>
+      <div class="card">
+        <h2>已发布手册版本</h2>
+        <div id="versionList"></div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<dialog id="drawerDialog">
+  <div class="dialog-head">
+    <strong id="drawerTitle"></strong>
+    <div><span id="drawerMeta" class="hint"></span> <button id="zoomOut" class="mini">－</button>
+      <button id="zoomReset" class="mini">100%</button><button id="zoomIn" class="mini">＋</button>
+      <button id="drawerClose" class="mini">关闭</button></div>
+  </div>
+  <div class="drawer-stage" id="drawerStage"><img id="drawerImg" alt="图纸"/></div>
+  <div id="drawerWarning" class="banner danger" hidden></div>
+</dialog>
+
+<div id="toast"></div>
+<script src="/app.js"></script>
+</body>
+</html>

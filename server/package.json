@@ -1,0 +1,17 @@
+{
+  "name": "hardware-install-manual",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "硬件安装手册：受控版本、DAG 步骤、证据绑定、差异确认迁移（演示系统）",
+  "scripts": {
+    "start": "node src/index.js",
+    "seed": "node src/db/seed.js"
+  },
+  "dependencies": {
+    "@electric-sql/pglite": "^0.2.12",
+    "express": "^4.21.0",
+    "multer": "^1.4.5-lts.1",
+    "pg": "^8.13.0"
+  }
+}
