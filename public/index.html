@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>硬件安装手册系统（演示）</title>
+<link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+<header class="topbar">
+  <div class="brand">🔧 硬件安装手册系统 <span class="demo-tag">DEMO 演示资料 · 未给定参数不得施工</span></div>
+  <div id="lockedBadge" class="locked-badge hidden"></div>
+</header>
+
+<main class="layout">
+  <!-- 左：实例与步骤 -->
+  <section class="col-steps">
+    <div id="instancePanel" class="panel">
+      <h2>安装实例</h2>
+      <div id="instanceListWrap">
+        <div class="row">
+          <select id="versionSelect" class="flex1"></select>
+          <input id="newInstanceName" placeholder="新实例名称" class="flex1">
+          <button id="createInstanceBtn">新建并锁定版本</button>
+        </div>
+        <div class="row">
+          <select id="instanceSelect" class="flex1"></select>
+          <button id="refreshBtn">刷新</button>
+        </div>
+      </div>
+      <div id="contextBox" class="context-box hidden">
+        <h3>① 型号与硬件修订确认（分支门 · S02）</h3>
+        <p class="hint">只能从受控清单精确选择；未知/铭牌不可读时保持“待确认”，后续步骤不会放行。禁止以相近型号代替。</p>
+        <div class="row">
+          <label>型号
+            <select id="modelSelect"><option value="">— 待确认 —</option></select>
+          </label>
+          <label>硬件修订
+            <select id="revSelect"><option value="">— 待确认 —</option></select>
+          </label>
+          <button id="confirmContextBtn">确认</button>
+        </div>
+        <div id="contextMsg" class="context-msg"></div>
+      </div>
+      <div id="progressBox" class="progress-box hidden">
+        <div class="progress-head"><span>安装进度（按适用性+DAG实时计算，非平移）</span><span id="progressPct"></span></div>
+        <div class="progress-track"><div id="progressBar" class="progress-bar"></div></div>
+        <div id="pendingSummary" class="pending-summary"></div>
+      </div>
+    </div>
+
+    <div class="panel">
+      <h2>逐步勾选（DAG）</h2>
+      <div id="stepList"></div>
+    </div>
+  </section>
+
+  <!-- 右：图纸/证据/迁移 -->
+  <section class="col-side">
+    <div class="panel" id="drawingPanel">
+      <h2>缩放图纸 <span id="drawingVersionTag" class="ver-tag"></span></h2>
+      <div class="drawing-toolbar">
+        <button id="zoomOutBtn">−</button>
+        <span id="zoomLevel">100%</span>
+        <button id="zoomInBtn">+</button>
+        <button id="zoomResetBtn">复位</button>
+        <span id="drawingWithdrawn" class="withdrawn-tag hidden">⚠ 本图纸已被撤回</span>
+      </div>
+      <div id="drawingViewport" class="drawing-viewport">
+        <div id="drawingScaler"><img id="drawingImg" alt="图纸"></div>
+      </div>
+      <p class="hint" id="drawingHint">点击步骤中的“查看图纸”在此缩放浏览；始终显示本实例锁定版本的图纸。</p>
+    </div>
+
+    <div class="panel hidden" id="actionPanel">
+      <h2 id="actionStepTitle">步骤操作</h2>
+      <div id="actionBody"></div>
+    </div>
+
+    <div class="panel hidden" id="reviewPanel">
+      <h2>复核项（图纸升级/撤回）</h2>
+      <div id="reviewList"></div>
+    </div>
+
+    <div class="panel hidden" id="migrationPanel">
+      <h2>受控迁移 / 锁定策略</h2>
+      <div id="migrationBody"></div>
+    </div>
+
+    <div class="panel">
+      <h2>导出 / 打印</h2>
+      <div class="row">
+        <a id="exportLink" class="btn-link" href="#">⬇ 导出 Markdown 安装记录</a>
+        <button id="printBtn">模拟打印</button>
+        <button id="printFailBtn">模拟打印失败</button>
+      </div>
+      <div id="printStatus" class="print-status"></div>
+    </div>
+
+    <div class="panel">
+      <h2>管理员演示动作</h2>
+      <p class="hint">撤回当前激活版图纸（影响已执行步骤 → 生成复核项，不强制迁移）：</p>
+      <div class="row">
+        <select id="withdrawKey"><option value="CTRL-DWG-01">CTRL-DWG-01 开孔图</option><option value="CTRL-DWG-02">CTRL-DWG-02 接线图</option></select>
+        <button id="withdrawBtn">撤回图纸</button>
+      </div>
+    </div>
+  </section>
+</main>
+
+<div id="toast" class="toast hidden"></div>
+<script src="/app.js"></script>
+</body>
+</html>

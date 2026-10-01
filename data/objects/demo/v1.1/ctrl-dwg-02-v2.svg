@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="560" viewBox="0 0 900 560" font-family="sans-serif">
+<rect width="900" height="560" fill="#fafafa"/>
+<rect x="20" y="20" width="860" height="520" fill="none" stroke="#333" stroke-width="2"/>
+<text x="40" y="60" font-size="24" font-weight="bold">CTRL-DWG-02 接线图（演示）</text>
+<text x="40" y="90" font-size="14" fill="#555">控制箱硬件安装演示手册 · DEMO 资料 · v1.1 · 非受控图纸，禁止用于实际施工</text>
+
+<rect x="80" y="140" width="220" height="120" fill="#fff" stroke="#333"/><text x="100" y="175" font-size="15">X1/X2 主电源</text><text x="100" y="205" font-size="12">线径/扭矩【未给定】</text>
+<rect x="360" y="140" width="220" height="120" fill="#fff" stroke="#333"/><text x="380" y="175" font-size="15">J1 (修订A, 2件式)</text><text x="380" y="205" font-size="12">针脚表【未给定】</text>
+<rect x="360" y="300" width="220" height="120" fill="#f0fff0" stroke="#080" stroke-width="2"/><text x="380" y="340" font-size="14" fill="#060">J1B (修订B, 4件式)</text><text x="380" y="366" font-size="12" fill="#060">v1.1 新增 · 针脚表【未给定】</text>
+<rect x="640" y="140" width="180" height="120" fill="#f0fff0" stroke="#080" stroke-width="2"/><text x="656" y="180" font-size="14" fill="#060">X3 (CB-200)</text><text x="656" y="206" font-size="12" fill="#060">v1.1 新增详图</text>
+
+<text x="40" y="510" font-size="13" fill="#b00">v1.1：新增 J1B/X3 详图 —— 已执行 S30/S21 需复核</text>
+<text x="760" y="510" font-size="13" fill="#555">图号见文件名 · v1.1</text>
+</svg>

@@ -1,0 +1,87 @@
+{
+  "manual_code": "HW-CTRLBOX",
+  "title": "控制箱硬件安装演示手册（DEMO 数据集）",
+  "notice": "本资料为系统验收用演示资料。凡标注【演示占位·参数未给定】之处，现场必须以受控工程文件为准，不得凭相似型号推测，不得编造接线或扭矩参数。",
+  "models": [
+    { "code": "CB-100", "label": "控制箱 CB-100（基础型）" },
+    { "code": "CB-200", "label": "控制箱 CB-200（扩展型，含附加电源端子 X3）" }
+  ],
+  "hw_revisions": ["A", "B"],
+  "versions": [
+    {
+      "version_label": "v1.0",
+      "published_at": "2026-08-01T09:00:00Z",
+      "status": "superseded",
+      "steps": [
+        { "step_key": "S01", "kind": "task", "seq_no": 10, "title": "开箱与装箱单核对",
+          "detail_md": "核对箱体外观与装箱单。\n\n本演示资料未提供完整装箱单明细（【演示占位·资料未给定】）。",
+          "dependencies": [], "drawing_key": null, "condition": null },
+        { "step_key": "S02", "kind": "decision", "seq_no": 20, "title": "型号与硬件修订确认（分支门）",
+          "detail_md": "读取箱体铭牌，确认**精确型号**（CB-100 / CB-200）与**硬件修订**（A / B）。\n\n- 铭牌不可读、型号不在本手册型号清单内、或硬件修订未知时：**停在“待确认”**，不得继续后续带电/接线步骤。\n- 禁止选择“看起来相近”的型号替代。",
+          "dependencies": ["S01"], "drawing_key": null, "condition": null },
+        { "step_key": "S10", "kind": "task", "seq_no": 30, "title": "箱体就位与机械固定",
+          "detail_md": "按开孔图固定箱体。固定件规格与扭矩在本演示资料中【演示占位·参数未给定】，须核对受控工程文件。",
+          "dependencies": ["S02"], "drawing_key": "CTRL-DWG-01", "condition": null },
+        { "step_key": "S20", "kind": "task", "seq_no": 40, "title": "主电源接线 X1/X2",
+          "detail_md": "按接线图完成主电源端子 X1/X2 接线。\n\n线径、端子扭矩在本演示资料中【演示占位·参数未给定】，严禁填入经验值。",
+          "dependencies": ["S10"], "drawing_key": "CTRL-DWG-02", "condition": "model == 'CB-100' or model == 'CB-200'" },
+        { "step_key": "S21", "kind": "task", "seq_no": 45, "title": "附加电源端子 X3 接线（仅 CB-200）",
+          "detail_md": "仅 CB-200：附加端子 X3 接线。针脚定义见接线图 CTRL-DWG-02 的 X3 区域。\n\n接线参数【演示占位·参数未给定】。",
+          "dependencies": ["S20"], "drawing_key": "CTRL-DWG-02", "condition": "model == 'CB-200'" },
+        { "step_key": "S30", "kind": "task", "seq_no": 50, "title": "信号连接器接线",
+          "detail_md": "硬件修订 A：使用连接器 J1（2 件式）。\n硬件修订 B：使用连接器 J1B（4 件式，针脚定义不同）——系统按铭牌确认结果自动进入对应子步骤。\n\n针脚表【演示占位·针脚表未给定】，以受控接线图为准。",
+          "dependencies": ["S10"], "drawing_key": "CTRL-DWG-02", "condition": "model == 'CB-100' or model == 'CB-200'" },
+        { "step_key": "S31", "kind": "task", "seq_no": 55, "title": "信号子步骤：修订 A 连接器 J1",
+          "detail_md": "仅硬件修订 A 适用。【演示占位·针脚表未给定】",
+          "dependencies": ["S30"], "drawing_key": "CTRL-DWG-02", "condition": "hw_revision == 'A'" },
+        { "step_key": "S32", "kind": "task", "seq_no": 56, "title": "信号子步骤：修订 B 连接器 J1B",
+          "detail_md": "仅硬件修订 B 适用。针脚定义与修订 A 不兼容，禁止互换。【演示占位·针脚表未给定】",
+          "dependencies": ["S30"], "drawing_key": "CTRL-DWG-02", "condition": "hw_revision == 'B'" },
+        { "step_key": "S40", "kind": "task", "seq_no": 60, "title": "保护接地连接与紧固",
+          "detail_md": "完成保护接地连接并按受控工程文件规定扭矩紧固。\n\n**接地扭矩在本演示资料中未给定【演示占位·参数未给定】——必须在步骤证据中附上实际采用的工程文件版本，否则不得勾选完成。**",
+          "dependencies": ["S20", "S30"], "drawing_key": null, "condition": null },
+        { "step_key": "S50", "kind": "task", "seq_no": 70, "title": "标签与外观终检",
+          "detail_md": "核对标签位置与外观。",
+          "dependencies": ["S40"], "drawing_key": null, "condition": null },
+        { "step_key": "S60", "kind": "task", "seq_no": 80, "title": "通电自检",
+          "detail_md": "通电并观察自检指示灯状态。判读标准【演示占位·未给定】。",
+          "dependencies": ["S50"], "drawing_key": null, "condition": null },
+        { "step_key": "S99", "kind": "task", "seq_no": 90, "title": "客户签收",
+          "detail_md": "客户在安装记录上签收。",
+          "dependencies": ["S60"], "drawing_key": null, "condition": null }
+      ],
+      "warnings": [
+        { "step_key": "S20", "code": "W-PWR-01", "severity": "danger", "message": "接线前确认上游断路器已断开并上锁挂牌（LOTO）。本演示资料不含 LOTO 具体程序。", "condition": null },
+        { "step_key": "S40", "code": "W-TRQ-01", "severity": "warning", "message": "接地紧固扭矩：演示资料未给定。禁止使用经验值或其他型号数值，必须附受控工程文件作为证据。", "condition": null },
+        { "step_key": "S32", "code": "W-REVB-01", "severity": "warning", "message": "修订 B 的 J1B 与修订 A 的 J1 物理键位不同，发现对插受阻不得强行压入。", "condition": null },
+        { "step_key": "S02", "code": "W-ID-01", "severity": "danger", "message": "型号/修订未知即进入接线属于违规：必须停在此步骤的“待确认”状态。", "condition": null }
+      ],
+      "drawings": [
+        { "drawing_key": "CTRL-DWG-01", "file": "ctrl-dwg-01-v1.svg", "change_note": "初版开孔图" },
+        { "drawing_key": "CTRL-DWG-02", "file": "ctrl-dwg-02-v1.svg", "change_note": "初版接线图（含修订 A 的 J1 针脚）" }
+      ]
+    },
+    {
+      "version_label": "v1.1",
+      "status": "active",
+      "base": "v1.0",
+      "published_at": "2026-09-15T09:00:00Z",
+      "step_patches": {
+        "S40": { "detail_md": "完成保护接地连接并按受控工程文件规定扭矩紧固，**v1.1 新增：紧固后必须做防松标识并拍照**。\n\n接地扭矩在本演示资料中仍【演示占位·参数未给定】。" },
+        "S50": { "dependencies": ["S41"] }
+      },
+      "add_steps": [
+        { "step_key": "S41", "kind": "task", "seq_no": 65, "title": "接地防松标识复核（v1.1 新增）",
+          "detail_md": "v1.1 新增步骤：检查接地紧固点防松标识完整，留存近照。",
+          "dependencies": ["S40"], "drawing_key": null, "condition": null }
+      ],
+      "add_warnings": [
+        { "step_key": "S41", "code": "W-LOCK-01", "severity": "caution", "message": "v1.1 新增：防松标识缺失时不得进入终检。", "condition": null }
+      ],
+      "drawings": [
+        { "drawing_key": "CTRL-DWG-01", "file": "ctrl-dwg-01-v2.svg", "change_note": "修订安装孔位标注（孔位尺寸标注变更，演示图）" },
+        { "drawing_key": "CTRL-DWG-02", "file": "ctrl-dwg-02-v2.svg", "change_note": "新增修订 B 的 J1B 针脚区与 CB-200 的 X3 详图" }
+      ]
+    }
+  ]
+}

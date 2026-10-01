@@ -23,3 +23,10 @@ __pycache__/
 *.log
 .env
 .env.*
+
+# PGlite 持久化与对象存储运行时数据
+data/pgdata/
+
+# 对象存储中的运行时实例数据（保留 data/objects/demo 演示图纸）
+data/objects/instances/
+data/photos/
